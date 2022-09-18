@@ -755,27 +755,54 @@ def shader(render, **kwargs): #Función hace los shaders.
    A, B, C = kwargs['vertices'] #Se obtienen los vértices.
    L = kwargs['light'] #Se obtiene el vector de la luz.
 
-   #Calculando la normal.
-   N = cross((B - A), (C - A)) #Se calcula la normal.
 
-   #print("Normal: ", N) #Se imprime la normal.
+   iA = nA.normalice() @ L.normalice() #Se calcula la intensidad del punto A.
+   iB = nB.normalice() @ L.normalice() #Se calcula la intensidad del punto B.
+   iC = nC.normalice() @ L.normalice() #Se calcula la intensidad del punto C.
 
-   i = (L.normalice() @ N.normalice()) * 5 #Se calcula el producto punto. Esto es para la intensidad del color.
+   i = iA * w + iB * u + iC * v #Se calcula la intensidad del punto P.
 
-   if i < 0: #Si i es menor a 1, entonces el punto está opuesto a la luz.
-     i = abs(i) #Se le saca el valor absoluto a i.
+   if i < 0: #Si la intensidad es menor que 0, entonces se setea en 0.
+        i = 0
 
-    #print(i) #Se imprime i.
-   if i > 1: #Si i es mayor a 1, entonces el punto está en la misma dirección que la luz.
-        i = 1 #Se le asigna el valor de 1 a i.
+   #print("Textura: ", tA, tB, tC) #Se imprimen los vértices de textura.
+   #print("Intensidad: ", i) #Se imprime la intensidad.
 
-#print("Producto punto: ", i)
 
 
    if render.tpath: #Si el path2 no está vacío, entonces se dibuja el triángulo con textura.
         tx = tA.x * w + tB.x * v + tC.x * u #Se calcula la x de la textura.
         ty = tA.y * w + tB.y * v + tC.y * u #Se calcula la y de la textura.
-        return  render.tpath.c2.get_color_with_intensity(tx, ty, i) #Se setea el color del punto con textura.
+        
+
+        b, g, r = render.colorP = c2.get_color_with_intensity(tx, ty, i) #Se obtiene el color de la textura con la intensidad.
+
+        #print("Tipo del color: ", type(render.colorP))
+
+        #print("Colores generados: ", b, g, r)
+
+        # Si b, g, r son mayores que 255, entonces se setean en 255.
+        if b > 255:
+            b = 255
+        if g > 255:
+            g = 255
+        if r > 255:
+            r = 255
+        
+        #Si b, g, r son menores que 0, entonces se setean en 0.
+        if b < 0:
+            b = 0
+        if g < 0:
+            g = 0
+        if r < 0:
+            r = 0
+
+        #Si el color no es de bytes, entonces se convierte a bytes.
+        # if type(render.colorP) != bytes:
+        #     render.colorP = color(0, 0, 0)
+
+        #print("Color: ", render.colorP)
+        return color(1, g/255, r/255) #Se setea el color del punto con textura.
     
     
 
@@ -829,9 +856,6 @@ def triangle(col, vertices, tv=(), nv=()): #Función que dibuja un triángulo.
 
             z = A.z * w + B.z * v + C.z * u #Se calcula la z.
 
-            
-            
-
             if (
                 z >= 0 and
                 y >= 0 and
@@ -842,11 +866,9 @@ def triangle(col, vertices, tv=(), nv=()): #Función que dibuja un triángulo.
                 c1.zBuffer[x][y] = z #Se setea la z.
                 
                 #print("Color del punto: ", active_shader)
-
-                r = Render() #Se crea un objeto de la clase Render.
                 
                 c1.colorP = shader(
-                    r, 
+                    c1, 
                     vertices=(A, B, C),
                     texture_coords=(tA, tB, tC),
                     normales=(nA, nB, nC),
