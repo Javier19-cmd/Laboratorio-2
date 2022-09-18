@@ -54,7 +54,11 @@ class Texture: #Clase para la textura.
         g = int(self.pixels[y][x][1] * intensity) #Obteniendo el valor de g.
         r = int(self.pixels[y][x][2] * intensity) #Obteniendo el valor de r.
 
-        return color(r/255, g/255, b/255) #Se devuelve el color de un pixel con una intensidad.
+        return color(
+            r/255, 
+            g/255, 
+            b/255
+            ) #Se devuelve el color de un pixel con una intensidad.
         #else:
          #   return color(0, 0, 0)
 #t = Texture("./earth.bmp") #Se crea la textura.

@@ -487,10 +487,39 @@ def modelo(path1, path2, col1): #Método para cargar un modelo 3D.
                 vt4 = V3(*r.vts[ft4])
 
                 #print("Cara: ", f1, f2, f3, f4)
+                
+                #Jalando las caras de las texturas.
+
+                fn1 = face[0][2] - 1 #Se le resta 1 porque el array de vértices empieza en 0.
+                fn2 = face[1][2] - 1 #Agarrando el índice 0.
+                fn3 = face[2][2] - 1 #Agarrando el índice 1.
+                fn4 = face[3][2] - 1 #Agarrando el índice 2.
+
+                #print(r.vertices[f1], scale, translate)
+
+                #Obteniendo los vértices de texuras.
+                vn1 = V3(*r.normal[fn1])
+
+                vn2 = V3(*r.normal[fn2])
+
+                vn3 = V3(*r.normal[fn3])
+
+                vn4 = V3(*r.normal[fn4])
 
                 #Dibujando los triangulos.
-                triangle(col1, (v1, v2, v4), (vt1, vt2, vt4))
-                triangle(col1, (v2, v3, v4), (vt2, vt3, vt4))
+                triangle(
+                        col1, 
+                        (v1, v2, v4), 
+                        (vt1, vt2, vt4), 
+                        (vn1, vn2, vn4)
+                        )
+                        
+                triangle(
+                        col1, 
+                        (v2, v3, v4), 
+                        (vt2, vt3, vt4), 
+                        (vn2, vn3, vn4)
+                        )
             
             else: #Si no hay textura, entonces se dibuja la cara sin textura.
                 #El array de caras es bidimensional en este código.
@@ -504,12 +533,30 @@ def modelo(path1, path2, col1): #Método para cargar un modelo 3D.
                 v2 = transform_vertex(r.vertices[f2])
                 v3 = transform_vertex(r.vertices[f3])
                 v4 = transform_vertex(r.vertices[f4])
+                
+                #Jalando las caras de las texturas.
+
+                fn1 = face[0][2] - 1 #Se le resta 1 porque el array de vértices empieza en 0.
+                fn2 = face[1][2] - 1 #Agarrando el índice 0.
+                fn3 = face[2][2] - 1 #Agarrando el índice 1.
+                fn4 = face[3][0] - 1 #Agarrando el índice 2.
+
+                #print(r.vertices[f1], scale, translate)
+
+                #Obteniendo los vértices de texuras.
+                vn1 = V3(*r.normal[fn1])
+
+                vn2 = V3(*r.normal[fn2])
+
+                vn3 = V3(*r.normal[fn3])
+
+                vn4 = V3(*r.normal[fn4])
 
                 #print("Cara: ", f1, f2, f3, f4)
 
                 #Dibujando los triangulos.
-                triangle(col1, (v1, v2, v4))
-                triangle(col1, (v2, v3, v4))
+                triangle(col1, (v1, v2, v4), (vn1, vn2, vn4))
+                triangle(col1, (v2, v3, v4), (vn1, vn3, vn4))
                 
 
 
@@ -545,6 +592,23 @@ def modelo(path1, path2, col1): #Método para cargar un modelo 3D.
 
                 vt3 = V3(*r.vts[ft3])
 
+
+                #Jalando las caras de las texturas.
+
+                fn1 = face[0][2] - 1 #Se le resta 1 porque el array de vértices empieza en 0.
+                fn2 = face[1][2] - 1 #Agarrando el índice 0.
+                fn3 = face[2][2] - 1 #Agarrando el índice 1.
+                #f4 = face[3][0] - 1 #Agarrando el índice 2.
+
+                #print(r.vertices[f1], scale, translate)
+
+                #Obteniendo los vértices de texuras.
+                vn1 = V3(*r.normal[fn1])
+
+                vn2 = V3(*r.normal[fn2])
+
+                vn3 = V3(*r.normal[fn3])
+
                 #print("Cara: ", f1, f2, f3)
                 #print(v1, v2, v3)
 
@@ -555,7 +619,8 @@ def modelo(path1, path2, col1): #Método para cargar un modelo 3D.
                 triangle(
                     col1, #Llamando al método triangle para dibujar un triángulo.
                     (v1, v2, v3)
-                    ,(vt1, vt2, vt3)
+                    ,(vt1, vt2, vt3),
+                    (vn1, vn2, vn3)
                 ) 
             else: #Si el path2 está vacío, entonces se dibuja el triángulo.
                 
@@ -571,7 +636,23 @@ def modelo(path1, path2, col1): #Método para cargar un modelo 3D.
                 v3 = transform_vertex(r.vertices[f3])
                 #v4 = transform_vertex(r.vertices[f4], c1.loadModelMatrix)
 
-                triangle(col1, (v1, v2, v3)) #Llamando al método triangle para dibujar un triángulo.
+                #Jalando las caras de las texturas.
+
+                fn1 = face[0][2] - 1 #Se le resta 1 porque el array de vértices empieza en 0.
+                fn2 = face[1][2] - 1 #Agarrando el índice 0.
+                fn3 = face[2][2] - 1 #Agarrando el índice 1.
+                #f4 = face[3][0] - 1 #Agarrando el índice 2.
+
+                #print(r.vertices[f1], scale, translate)
+
+                #Obteniendo los vértices de texuras.
+                vn1 = V3(*r.normal[fn1])
+
+                vn2 = V3(*r.normal[fn2])
+
+                vn3 = V3(*r.normal[fn3])
+
+                triangle(col1, (v1, v2, v3), (vn1, vn2, vn3)) #Llamando al método triangle para dibujar un triángulo.
 
 #Función que transforma los vértices de la estructura de la imagen.
 def transform_vertex(vertex):
@@ -667,7 +748,41 @@ def baricentrico(A, B, C, P):
 
         return (u, v, w)
 
-def triangle(col, vertices, tv=()): #Función que dibuja un triángulo.
+def shader(render, **kwargs): #Función hace los shaders.
+   w, u, v = kwargs['bar'] #Se obtienen los valores de u, v y w.
+   tA, tB, tC = kwargs['texture_coords'] #Se obtienen los vértices de textura.
+   nA, nB, nC = kwargs['normales'] #Se obtienen los vértices de normales.
+   A, B, C = kwargs['vertices'] #Se obtienen los vértices.
+   L = kwargs['light'] #Se obtiene el vector de la luz.
+
+   #Calculando la normal.
+   N = cross((B - A), (C - A)) #Se calcula la normal.
+
+   #print("Normal: ", N) #Se imprime la normal.
+
+   i = (L.normalice() @ N.normalice()) * 5 #Se calcula el producto punto. Esto es para la intensidad del color.
+
+   if i < 0: #Si i es menor a 1, entonces el punto está opuesto a la luz.
+     i = abs(i) #Se le saca el valor absoluto a i.
+
+    #print(i) #Se imprime i.
+   if i > 1: #Si i es mayor a 1, entonces el punto está en la misma dirección que la luz.
+        i = 1 #Se le asigna el valor de 1 a i.
+
+#print("Producto punto: ", i)
+
+
+   if render.tpath: #Si el path2 no está vacío, entonces se dibuja el triángulo con textura.
+        tx = tA.x * w + tB.x * v + tC.x * u #Se calcula la x de la textura.
+        ty = tA.y * w + tB.y * v + tC.y * u #Se calcula la y de la textura.
+        return  render.tpath.c2.get_color_with_intensity(tx, ty, i) #Se setea el color del punto con textura.
+    
+    
+
+    #print("Y: ", y)
+    #return color(1, 0, 0)
+
+def triangle(col, vertices, tv=(), nv=()): #Función que dibuja un triángulo.
 
     A, B, C = vertices #Se obtienen los vértices.
 
@@ -675,34 +790,15 @@ def triangle(col, vertices, tv=()): #Función que dibuja un triángulo.
         tA, tB, tC = tv #Se obtienen los vértices de textura.
         #print(tA, tB, tC)
 
+    nA, nB, nC = nv #Se obtienen los vértices de normales.
+
     #print(col[0], col[1], col[2])
 
     #print(A, B, C) #Se imprimen las coordenadas.
 
     L = V3(0, 0, 1) #Vector de la luz.
 
-    #Calculando la normal.
-    N = cross((B - A), (C - A)) #Se calcula la normal.
-
-    #print("Normal: ", N) #Se imprime la normal.
-
-    i = (L.normalice() @ N.normalice()) * 5 #Se calcula el producto punto. Esto es para la intensidad del color.
-
     #print("Intensidad: ", i) #Se imprime la intensidad.
-
-    if i < 0: #Si i es menor a 1, entonces el punto está opuesto a la luz.
-        i = abs(i) #Se le saca el valor absoluto a i.
-        #print(i) #Se imprime i.
-    if i > 1: #Si i es mayor a 1, entonces el punto está en la misma dirección que la luz.
-        i = 1 #Se le asigna el valor de 1 a i.
-    
-    #print("Producto punto: ", i)
-
-    c1.colorP = color(
-        col[0] * i, 
-        col[1] * i, 
-        col[2] * i
-        ) #Se setea el color del punto en escala de grises.
 
     #print("Color: ", c1.colorP)
 
@@ -732,6 +828,8 @@ def triangle(col, vertices, tv=()): #Función que dibuja un triángulo.
             #print("Color del punto", c1.colorP)
 
             z = A.z * w + B.z * v + C.z * u #Se calcula la z.
+
+            
             
 
             if (
@@ -743,13 +841,21 @@ def triangle(col, vertices, tv=()): #Función que dibuja un triángulo.
                 ): #Si el zBuffer es menor a z, entonces se dibuja el punto.
                 c1.zBuffer[x][y] = z #Se setea la z.
                 
-                if c1.tpath: #Si el path2 no está vacío, entonces se dibuja el triángulo con textura.
-                    tx = tA.x * w + tB.x * v + tC.x * u #Se calcula la x de la textura.
-                    ty = tA.y * w + tB.y * v + tC.y * u #Se calcula la y de la textura.
-                    c1.colorP = c2.get_color_with_intensity(tx, ty, i) #Se setea el color del punto con textura.
+                #print("Color del punto: ", active_shader)
 
-                    #print(c1.colorP)
+                r = Render() #Se crea un objeto de la clase Render.
+                
+                c1.colorP = shader(
+                    r, 
+                    vertices=(A, B, C),
+                    texture_coords=(tA, tB, tC),
+                    normales=(nA, nB, nC),
+                    bar=(w, v, u),
+                    light = L
+                    ) #Creando los shaders con la función shader.
+
                 glVertex(x, y) #Se dibuja el punto.
+
             #glVertex(x, y) #Se dibuja el punto.
 
 
