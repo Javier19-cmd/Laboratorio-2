@@ -15,7 +15,7 @@ def main():
     glClearColor(1, 1, 1) #Color del fondo.
     glClear() #Limpiando el framebuffer con el color creado en glClearColor.
     
-    glViewPort(600, 900, 300, 300) #Asignando el viewport.
+    glViewPort(300, 500, 300, 300) #Asignando el viewport.
 
     col1 = (0.6, 0.1, 0.9) #Otro color.
 

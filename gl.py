@@ -809,10 +809,11 @@ def shader(render, **kwargs): #Función hace los shaders.
         # if type(render.colorP) != bytes:
         #     render.colorP = color(0, 0, 0)
 
-        #print("Color: ", render.colorP)
-        return color(b/255, g/255, r/255) #Se setea el color del punto con textura.
+        #print("Color en el shader: ", render.colorP)
 
-        # return render.colorP #Se setea el color del punto con textura.
+        #return color(b/255, g/255, r/255) #Se setea el color del punto con textura.
+
+        return render.colorP #Se setea el color del punto con textura.
 
         ##
 
