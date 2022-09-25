@@ -458,83 +458,103 @@ def modelo(path1, path2, col1): #Método para cargar un modelo 3D.
         
         if len(face) == 4: #Validando que la cara tenga 4 vértices.
             
-            if c1.tpath: #Si hay una textura, entonces se dibuja la cara con textura.
+            # if c1.tpath: #Si hay una textura, entonces se dibuja la cara con textura.
             
-                #El array de caras es bidimensional en este código.
-                f1 = face[0][0] - 1 #Se le resta 1 porque el array de vértices empieza en 0.
-                f2 = face[1][0] - 1 #Agarrando el índice 0.
-                f3 = face[2][0] - 1 #Agarrando el índice 1.
-                f4 = face[3][0] - 1 #Agarrando el índice 2.
+            #     #El array de caras es bidimensional en este código.
+            #     f1 = face[0][0] - 1 #Se le resta 1 porque el array de vértices empieza en 0.
+            #     f2 = face[1][0] - 1 #Agarrando el índice 0.
+            #     f3 = face[2][0] - 1 #Agarrando el índice 1.
+            #     f4 = face[3][0] - 1 #Agarrando el índice 2.
 
-                #Transformando los vértices.
-                v1 = transform_vertex(r.vertices[f1]) 
-                v2 = transform_vertex(r.vertices[f2])
-                v3 = transform_vertex(r.vertices[f3])
-                v4 = transform_vertex(r.vertices[f4])
+            #     #Transformando los vértices.
+            #     v1 = transform_vertex(r.vertices[f1]) 
+            #     v2 = transform_vertex(r.vertices[f2])
+            #     v3 = transform_vertex(r.vertices[f3])
+            #     v4 = transform_vertex(r.vertices[f4])
 
-                ft1 = face[0][1] - 1 #Se le resta 1 porque el array de vértices empieza en 0.
-                ft2 = face[1][1] - 1 #Agarrando el índice 0.
-                ft3 = face[2][1] - 1 #Agarrando el índice 1.
-                ft4 = face[3][1] - 1 #Agarrando el índice 2.
+            #     ft1 = face[0][1] - 1 #Se le resta 1 porque el array de vértices empieza en 0.
+            #     ft2 = face[1][1] - 1 #Agarrando el índice 0.
+            #     ft3 = face[2][1] - 1 #Agarrando el índice 1.
+            #     ft4 = face[3][1] - 1 #Agarrando el índice 2.
                 
                 
-                #Obteniendo los vértices de texuras.
-                vt1 = V3(*r.vts[ft1])
+            #     #Obteniendo los vértices de texuras.
+            #     vt1 = V3(*r.vts[ft1])
 
-                vt2 = V3(*r.vts[ft2])
+            #     vt2 = V3(*r.vts[ft2])
 
-                vt3 = V3(*r.vts[ft3])
+            #     vt3 = V3(*r.vts[ft3])
 
-                vt4 = V3(*r.vts[ft4])
+            #     vt4 = V3(*r.vts[ft4])
 
-                #print("Cara: ", f1, f2, f3, f4)
+            #     #print("Cara: ", f1, f2, f3, f4)
                 
-                #Jalando las caras de las texturas.
+            #     #Jalando las caras de las texturas.
 
-                fn1 = face[0][2] - 1 #Se le resta 1 porque el array de vértices empieza en 0.
-                fn2 = face[1][2] - 1 #Agarrando el índice 0.
-                fn3 = face[2][2] - 1 #Agarrando el índice 1.
-                fn4 = face[3][2] - 1 #Agarrando el índice 2.
+            #     #Verificando que los vértices tengan normal.
+            #     if len(face[0]) == 3:
 
-                #print(r.vertices[f1], scale, translate)
+            #         fn1 = face[0][2] - 1 #Se le resta 1 porque el array de vértices empieza en 0.
+            #         fn2 = face[1][2] - 1 #Agarrando el índice 0.
+            #         fn3 = face[2][2] - 1 #Agarrando el índice 1.
+            #         fn4 = face[3][2] - 1 #Agarrando el índice 2.
 
-                #Obteniendo los vértices de texuras.
-                vn1 = V3(*r.normal[fn1])
+            #         #print(r.vertices[f1], scale, translate)
 
-                vn2 = V3(*r.normal[fn2])
+            #         #Obteniendo los vértices de texuras.
+            #         vn1 = V3(*r.normal[fn1])
 
-                vn3 = V3(*r.normal[fn3])
+            #         vn2 = V3(*r.normal[fn2])
 
-                vn4 = V3(*r.normal[fn4])
+            #         vn3 = V3(*r.normal[fn3])
 
-                #Dibujando los triangulos.
-                triangle(
-                        col1, 
-                        (v1, v2, v4), 
-                        (vt1, vt2, vt4), 
-                        (vn1, vn2, vn4)
-                        )
-                        
-                triangle(
-                        col1, 
-                        (v2, v3, v4), 
-                        (vt2, vt3, vt4), 
-                        (vn2, vn3, vn4)
-                        )
+            #         vn4 = V3(*r.normal[fn4])
+
+            #         #Dibujando los triangulos.
+            #         triangle(
+            #                 col1, 
+            #                 (v1, v2, v4), 
+            #                 (vt1, vt2, vt4), 
+            #                 (vn1, vn2, vn4)
+            #                 )
+                            
+            #         triangle(
+            #                 col1, 
+            #                 (v2, v3, v4), 
+            #                 (vt2, vt3, vt4), 
+            #                 (vn2, vn3, vn4)
+            #                 )
+            #     else: 
+            #         #Dibujando los triangulos.
+            #         triangle(
+            #                 col1, 
+            #                 (v1, v2, v4), 
+            #                 (vt1, vt2, vt4)
+            #                 )
+                            
+            #         triangle(
+            #                 col1, 
+            #                 (v2, v3, v4), 
+            #                 (vt2, vt3, vt4)
+            #                 )
             
-            else: #Si no hay textura, entonces se dibuja la cara sin textura.
-                #El array de caras es bidimensional en este código.
-                f1 = face[0][0] - 1 #Se le resta 1 porque el array de vértices empieza en 0.
-                f2 = face[1][0] - 1 #Agarrando el índice 0.
-                f3 = face[2][0] - 1 #Agarrando el índice 1.
-                f4 = face[3][0] - 1 #Agarrando el índice 2.
+            # else: #Si no hay textura, entonces se dibuja la cara sin textura.
+            #El array de caras es bidimensional en este código.
+            f1 = face[0][0] - 1 #Se le resta 1 porque el array de vértices empieza en 0.
+            f2 = face[1][0] - 1 #Agarrando el índice 0.
+            f3 = face[2][0] - 1 #Agarrando el índice 1.
+            f4 = face[3][0] - 1 #Agarrando el índice 2.
 
-                #Transformando los vértices.
-                v1 = transform_vertex(r.vertices[f1]) 
-                v2 = transform_vertex(r.vertices[f2])
-                v3 = transform_vertex(r.vertices[f3])
-                v4 = transform_vertex(r.vertices[f4])
-                
+            #Transformando los vértices.
+            v1 = transform_vertex(r.vertices[f1]) 
+            v2 = transform_vertex(r.vertices[f2])
+            v3 = transform_vertex(r.vertices[f3])
+            v4 = transform_vertex(r.vertices[f4])
+
+            #Verificando que los vértices tengan normal.
+            
+            if len(face[0]) == 3:
+
                 #Jalando las caras de las texturas.
 
                 fn1 = face[0][2] - 1 #Se le resta 1 porque el array de vértices empieza en 0.
@@ -558,102 +578,110 @@ def modelo(path1, path2, col1): #Método para cargar un modelo 3D.
                 #Dibujando los triangulos.
                 triangle(col1, (v1, v2, v4), (vn1, vn2, vn4))
                 triangle(col1, (v2, v3, v4), (vn1, vn3, vn4))
+            
+            else: 
+                #Dibujando los triangulos.
+                triangle(col1, (v1, v2, v4))
+                triangle(col1, (v2, v3, v4))
                 
 
 
         elif len(face) == 3: #Validando que la cara tenga 3 vértices.
             
-            if c1.tpath: #Si el path2 no está vacío, entonces se dibuja el triángulo.
+            # if c1.tpath: #Si el path2 no está vacío, entonces se dibuja el triángulo.
                 
-                #El array de caras es bidimensional en este código.
-                f1 = face[0][0] - 1 #Se le resta 1 porque el array de vértices empieza en 0.
-                f2 = face[1][0] - 1 #Agarrando el índice 0.
-                f3 = face[2][0] - 1 #Agarrando el índice 1.
-                #f4 = face[3][0] - 1 #Agarrando el índice 2.
+            #     #El array de caras es bidimensional en este código.
+            #     f1 = face[0][0] - 1 #Se le resta 1 porque el array de vértices empieza en 0.
+            #     f2 = face[1][0] - 1 #Agarrando el índice 0.
+            #     f3 = face[2][0] - 1 #Agarrando el índice 1.
+            #     #f4 = face[3][0] - 1 #Agarrando el índice 2.
 
-                #Transformando los vértices.
-                v1 = transform_vertex(r.vertices[f1]) 
-                v2 = transform_vertex(r.vertices[f2])
-                v3 = transform_vertex(r.vertices[f3])
-                #v4 = transform_vertex(r.vertices[f4], c1.loadModelMatrix)
+            #     #Transformando los vértices.
+            #     v1 = transform_vertex(r.vertices[f1]) 
+            #     v2 = transform_vertex(r.vertices[f2])
+            #     v3 = transform_vertex(r.vertices[f3])
+            #     #v4 = transform_vertex(r.vertices[f4], c1.loadModelMatrix)
                 
-                #Jalando las caras de las texturas.
+            #     #Jalando las caras de las texturas.
 
-                ft1 = face[0][1] - 1 #Se le resta 1 porque el array de vértices empieza en 0.
-                ft2 = face[1][1] - 1 #Agarrando el índice 0.
-                ft3 = face[2][1] - 1 #Agarrando el índice 1.
-                #f4 = face[3][0] - 1 #Agarrando el índice 2.
+            #     ft1 = face[0][1] - 1 #Se le resta 1 porque el array de vértices empieza en 0.
+            #     ft2 = face[1][1] - 1 #Agarrando el índice 0.
+            #     ft3 = face[2][1] - 1 #Agarrando el índice 1.
+            #     #f4 = face[3][0] - 1 #Agarrando el índice 2.
 
-                #print(r.vertices[f1], scale, translate)
+            #     #print(r.vertices[f1], scale, translate)
 
-                #Obteniendo los vértices de texuras.
-                vt1 = V3(*r.vts[ft1])
+            #     #Obteniendo los vértices de texuras.
+            #     vt1 = V3(*r.vts[ft1])
 
-                vt2 = V3(*r.vts[ft2])
+            #     vt2 = V3(*r.vts[ft2])
 
-                vt3 = V3(*r.vts[ft3])
+            #     vt3 = V3(*r.vts[ft3])
 
 
-                #Jalando las caras de las texturas.
+            #     #Jalando las caras de las texturas.
 
-                fn1 = face[0][2] - 1 #Se le resta 1 porque el array de vértices empieza en 0.
-                fn2 = face[1][2] - 1 #Agarrando el índice 0.
-                fn3 = face[2][2] - 1 #Agarrando el índice 1.
-                #f4 = face[3][0] - 1 #Agarrando el índice 2.
+            #     fn1 = face[0][2] - 1 #Se le resta 1 porque el array de vértices empieza en 0.
+            #     fn2 = face[1][2] - 1 #Agarrando el índice 0.
+            #     fn3 = face[2][2] - 1 #Agarrando el índice 1.
+            #     #f4 = face[3][0] - 1 #Agarrando el índice 2.
 
-                #print(r.vertices[f1], scale, translate)
+            #     #print(r.vertices[f1], scale, translate)
 
-                #Obteniendo los vértices de texuras.
-                vn1 = V3(*r.normal[fn1])
+            #     #Obteniendo los vértices de texuras.
+            #     vn1 = V3(*r.normal[fn1])
 
-                vn2 = V3(*r.normal[fn2])
+            #     vn2 = V3(*r.normal[fn2])
 
-                vn3 = V3(*r.normal[fn3])
+            #     vn3 = V3(*r.normal[fn3])
 
-                #print("Cara: ", f1, f2, f3)
-                #print(v1, v2, v3)
+            #     #print("Cara: ", f1, f2, f3)
+            #     #print(v1, v2, v3)
 
-                #colr = color(1, 0, 0) #Color para el triángulo.
+            #     #colr = color(1, 0, 0) #Color para el triángulo.
 
-                #print("Textura: ", c1.tpath) #Debuggeo.
+            #     #print("Textura: ", c1.tpath) #Debuggeo.
 
-                triangle(
-                    col1, #Llamando al método triangle para dibujar un triángulo.
-                    (v1, v2, v3)
-                    ,(vt1, vt2, vt3),
-                    (vn1, vn2, vn3)
-                ) 
-            else: #Si el path2 está vacío, entonces se dibuja el triángulo.
+            #     triangle(
+            #         col1, #Llamando al método triangle para dibujar un triángulo.
+            #         (v1, v2, v3)
+            #         ,(vt1, vt2, vt3),
+            #         (vn1, vn2, vn3)
+            #     ) 
+            # else: #Si el path2 está vacío, entonces se dibuja el triángulo.
                 
-                #El array de caras es bidimensional en este código.
-                f1 = face[0][0] - 1 #Se le resta 1 porque el array de vértices empieza en 0.
-                f2 = face[1][0] - 1 #Agarrando el índice 0.
-                f3 = face[2][0] - 1 #Agarrando el índice 1.
+            #El array de caras es bidimensional en este código.
+            f1 = face[0][0] - 1 #Se le resta 1 porque el array de vértices empieza en 0.
+            f2 = face[1][0] - 1 #Agarrando el índice 0.
+            f3 = face[2][0] - 1 #Agarrando el índice 1.
 
 
-                #Transformando los vértices.
-                v1 = transform_vertex(r.vertices[f1]) 
-                v2 = transform_vertex(r.vertices[f2])
-                v3 = transform_vertex(r.vertices[f3])
-                #v4 = transform_vertex(r.vertices[f4], c1.loadModelMatrix)
+            #Transformando los vértices.
+            v1 = transform_vertex(r.vertices[f1]) 
+            v2 = transform_vertex(r.vertices[f2])
+            v3 = transform_vertex(r.vertices[f3])
+            #v4 = transform_vertex(r.vertices[f4], c1.loadModelMatrix)
 
-                #Jalando las caras de las texturas.
+            #Jalando las caras de las texturas.
 
-                fn1 = face[0][2] - 1 #Se le resta 1 porque el array de vértices empieza en 0.
-                fn2 = face[1][2] - 1 #Agarrando el índice 0.
-                fn3 = face[2][2] - 1 #Agarrando el índice 1.
-                #f4 = face[3][0] - 1 #Agarrando el índice 2.
+            fn1 = face[0][2] - 1 #Se le resta 1 porque el array de vértices empieza en 0.
+            fn2 = face[1][2] - 1 #Agarrando el índice 0.
+            fn3 = face[2][2] - 1 #Agarrando el índice 1.
+            #f4 = face[3][0] - 1 #Agarrando el índice 2.
 
-                #print(r.vertices[f1], scale, translate)
+            #print(r.vertices[f1], scale, translate)
 
-                #Obteniendo los vértices de texuras.
-                vn1 = V3(*r.normal[fn1])
+            #Obteniendo los vértices de texuras.
+            vn1 = V3(*r.normal[fn1])
 
-                vn2 = V3(*r.normal[fn2])
+            vn2 = V3(*r.normal[fn2])
 
-                vn3 = V3(*r.normal[fn3])
+            vn3 = V3(*r.normal[fn3])
 
-                triangle(col1, (v1, v2, v3), (vn1, vn2, vn3)) #Llamando al método triangle para dibujar un triángulo.
+            #Haciendo el render de los triángulos.
+            triangle(col1, (v1, v2, v3), (vn1, vn2, vn3)) #Llamando al método triangle para dibujar un triángulo.
+
+            #triangle(col1, (v1, v2, v3), (vn1, vn2, vn3)) #Llamando al método triangle para dibujar un triángulo.
 
 #Función que transforma los vértices de la estructura de la imagen.
 def transform_vertex(vertex):
@@ -820,12 +848,12 @@ def shader(render, **kwargs): #Función hace los shaders.
     #print("Y: ", y)
     #return color(1, 0, 0)
 
-def triangle(col, vertices, tv=(), nv=()): #Función que dibuja un triángulo.
+def triangle(col, vertices, nv=()): #Función que dibuja un triángulo.
 
     A, B, C = vertices #Se obtienen los vértices.
 
-    if c1.tpath: #Si el path2 no está vacío, entonces se dibuja el triángulo con textura.
-        tA, tB, tC = tv #Se obtienen los vértices de textura.
+    # if c1.tpath: #Si el path2 no está vacío, entonces se dibuja el triángulo con textura.
+    #     tA, tB, tC = tv #Se obtienen los vértices de textura.
         #print(tA, tB, tC)
 
     nA, nB, nC = nv #Se obtienen los vértices de normales.
@@ -881,7 +909,7 @@ def triangle(col, vertices, tv=(), nv=()): #Función que dibuja un triángulo.
                 c1.colorP = shader(
                     c1, 
                     vertices=(A, B, C),
-                    texture_coords=(tA, tB, tC),
+                    #texture_coords=(tA, tB, tC),
                     normales=(nA, nB, nC),
                     bar=(w, v, u),
                     light = L

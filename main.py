@@ -39,7 +39,7 @@ def main():
     loadModelMatrix(translate, scale, rotacion) #Se carga la matriz de transformación del modelo. Acá se recibe la traslación, la escala y la rotación.
 
     #Esta función ahora recibe primero el path del obj, luego el path del bmp, el color.
-    modelo("./box.obj", "./box.bmp", col1) 
+    modelo("./sphere.obj", "", col1) 
 
     glFinish() #Escribiendo el framebuffer en la imagen y guardándola en un archivo.
 
