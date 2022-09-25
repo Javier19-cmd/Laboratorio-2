@@ -11,28 +11,13 @@ from gl import * #Importando el archivo gl.py, para crear la imagen.
 from textures import * #Importando los métodos del archivo textures.py.
 
 def main():
-    glCreateWindow(2048, 2048) #Creando la ventana.
+    glCreateWindow(2024, 2024) #Creando la ventana.
     glClearColor(1, 1, 1) #Color del fondo.
     glClear() #Limpiando el framebuffer con el color creado en glClearColor.
     
-    glViewPort(400, 400, 300, 300) #Asignando el viewport.
-    
-    #glVertex(0.1, 0.3) #Dibujando el punto.
-
-    #glColor(0.6, 0.1, 0.9) #Asignando el color del punto.
-
-    #col1 = color(0.501, 0.501, 0.501) #Color gris.
+    glViewPort(600, 900, 300, 300) #Asignando el viewport.
 
     col1 = (0.6, 0.1, 0.9) #Otro color.
-
-    #triangle(V3(10, 70), V3(50, 160), V3(70, 80), col1) #Llamando al método triangle para dibujar un triángulo.
-    #triangle(V3(180, 50), V3(150, 1), V3(70, 180), col2) #Llamando al método triangle para dibujar un triángulo.
-    #triangle(V3(180, 150), V3(120, 160), V3(130, 180), col3) #Llamando al método triangle para dibujar un triángulo.
-
-
-    #modelo("./Pallet.obj", scale, translate, col1)
-
-    # zBuffer() #Haciendo la copia del z-buffer.
 
     #Probando el lookat.
     # El medium shot se hizo con estas medidas: V3(25, 0, 10), V3(0, 1, 0), V3(0, 1, 0).
@@ -41,28 +26,20 @@ def main():
     # del viewport fueron glViewPort(900, 500, 300, 300).
     # El dutch angle se hizo con estas medidas: scale = (0.75, 0.75, 1), translate = (1, 0.2, 0)
     # rotacion = (0, 0, pi/2), glViewPort(700, 800, 300, 300) y lookAt(V3(0, 0, 10), V3(0, 1, 0), V3(0, 1, 0)). 
-    lookAt(V3(0, 0, 10), V3(0, 0, 0), V3(0, 1, 0))
+    lookAt(V3(0, 0, 10), V3(0, 1, 0), V3(0, 1, 0))
 
-    scale = (0.75, 0.75, 1) #Escala para los bb8's.
-    translate = (1, 0.2, 0) #Traslación para los bb8's.
+    scale = (1, 1, 1) #Escala para las cajas.
+    translate = (1, 0.2, 0) #Traslación para las cajas.
     
-    rotacion = (0, 0, 0) #Rotación para los bb8's.
+    rotacion = (0, 0, 0) #Rotación para las cajas.
 
     print("Rotación: ", rotacion)
     
     #Esta llamada puede no estar acá.
     loadModelMatrix(translate, scale, rotacion) #Se carga la matriz de transformación del modelo. Acá se recibe la traslación, la escala y la rotación.
 
-    
-    #print("Color del punto: ", shdaer)
-
-    #Esta función ahora recibe primero el path del obj, luego el path del bmp, el color y luego el shader que se va a usar.
-    modelo("./droids.obj", "./material2.bmp", col1) 
-
-
-    #texturas("./model.obj", "./model.bmp", col1)
-
-    #texturas("./Pallet.obj", "./Pallet.bmp", col1) #Llamando al método texturas.
+    #Esta función ahora recibe primero el path del obj, luego el path del bmp, el color.
+    modelo("./box.obj", "./box.bmp", col1) 
 
     glFinish() #Escribiendo el framebuffer en la imagen y guardándola en un archivo.
 

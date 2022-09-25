@@ -40,7 +40,6 @@ from Matrixes import *
 
 c1 = Render() #Inicializando la clase Render.
 c2 = Texture() #Inicializando las texturas.
-c3 = Matriz() #Inicializando la clase de matrices.
 
 #Pregunar si está bien implementada esta función.
 def glInit(): #Se usará para poder inicializar cualquier objeto interno que requiera el software de render.
@@ -232,8 +231,8 @@ def loadModelMatrix(translate=(0,0,0), scale=(1,1,1), rotate=(0,0,0)): #Función
 
     #Convirtiendo los parámetros a V3 por el momento.
     translate = V3(translate[0], translate[1], translate[2])
-    scale = V3(scale[0], scale[1], scale[2])
-    rotate = V3(rotate[0], rotate[1], rotate[2])
+    scale =     V3(scale[0],         scale[1],     scale[2])
+    rotate =    V3(rotate[0],       rotate[1],    rotate[2])
 
     # #Definiendo la matriz de transformación esto es con numpy.
     # traslation_matrix_np = matrix([
@@ -283,49 +282,49 @@ def loadModelMatrix(translate=(0,0,0), scale=(1,1,1), rotate=(0,0,0)): #Función
     ######################################################################################################################################################################
 
     #Definiendo la matriz de transformación esto es sin numpy.
-    traslation_matrix = [
+    traslation_matrix = Matriz([
         [1, 0, 0, translate.x],
         [0, 1, 0, translate.y],
         [0, 0, 1, translate.z],
         [0, 0, 0,           1]
-    ]
+    ])
 
     #Definiendo la matriz de escala.
-    scale_matrix = [
+    scale_matrix = Matriz([
         [scale.x, 0, 0, 0],
         [0, scale.y, 0, 0],
         [0, 0, 1, scale.z],
         [0, 0, 0,       1]
-    ]
+    ])
 
     #Definiendo la matriz de rotación.
 
     #Rotación en x.
     a = rotate.x
-    rotation_matrix_x = [
+    rotation_matrix_x = Matriz([
         [1,    0,        0,  0],
         [0, cos(a), -sin(a), 0],
         [0, sin(a),  cos(a), 0],
         [0,      0,       0, 1]
-    ]
+    ])
 
     #Rotación en y.
     b = rotate.y
-    rotation_matrix_y = [
+    rotation_matrix_y = Matriz([
         [cos(b),  0, sin(b),  0],
         [0,       1,      0,  0],
         [-sin(b), 0, cos(b),  0],
         [      0, 0,      0,  1]
-    ]
+    ])
 
     #Rotación en z.
     c = rotate.z
-    rotation_matrix_z = [
+    rotation_matrix_z = Matriz([
         [cos(c), -sin(c), 0,  0],
         [sin(c),  cos(c), 0,  0],
         [0,            0, 1,  0],
         [0,            0, 0,  1]
-    ]
+    ])
 
     # #Multiplicando las matrices. Estos resultados se deben a numpy.
 
@@ -342,11 +341,12 @@ def loadModelMatrix(translate=(0,0,0), scale=(1,1,1), rotate=(0,0,0)): #Función
     #print("Matriz del modelo: ", c1.matrix_np)
     
     #Multiplicación de las matrices. Esto es sin numpy.
-    rotation_matrix = c3.multiplicar(c3.multiplicar(rotation_matrix_x, rotation_matrix_y), rotation_matrix_z) #Esto es sin numpy.
-
+    #rotation_matrix = c3.multiplicar(c3.multiplicar(rotation_matrix_x, rotation_matrix_y), rotation_matrix_z) #Esto es sin numpy.
+    rotation_matrix = rotation_matrix_x * rotation_matrix_y * rotation_matrix_z #Esto es sin numpy.
+    
     #c1.matrix = traslation_matrix @ scale_matrix @ rotation_matrix #Esto es sin numpy.
-    c1.model_s = c3.multiplicar(c3.multiplicar(traslation_matrix, rotation_matrix), scale_matrix) #Esto es sin numpy.
-
+    #c1.model_s = c3.multiplicar(c3.multiplicar(traslation_matrix, rotation_matrix), scale_matrix) #Esto es sin numpy.
+    c1.model_s = traslation_matrix * rotation_matrix * scale_matrix #Esto es sin numpy.
 
     # print("---------------------------------------------------")
     # print("Matriz de rotación: ")
@@ -383,21 +383,23 @@ def loadViewMatrix(x, y, z, center):
 
 
     #Definiendo la matriz de vista (sin numpy)
-    Mi = [
+    Mi = Matriz([
         [x.x, x.y, x.z, 0],
         [y.x, y.y, y.z, 0],
         [z.x, z.y, z.z, 0],
         [0,     0,   0, 1]
-    ] #Matriz inversa.
+    ]) #Matriz inversa.
 
-    Op2 = [
+    Op2 = Matriz([
         [1, 0, 0, -center.x],
         [0, 1, 0, -center.y],
         [0, 0, 1, -center.z],
         [0, 0, 0,         1]
-    ] # Matriz de traslación.
+    ]) # Matriz de traslación.
 
-    c1.view = c3.multiplicar(Mi, Op2) #Multiplicando las matrices.
+    #c1.view = c3.multiplicar(Mi, Op2) #Multiplicando las matrices.
+
+    c1.view = Mi * Op2 #Multiplicando las matrices.
 
     print("Matriz de vista sin numpy: ", c1.view)
 
@@ -406,21 +408,21 @@ def loadProjectionMatrix(eye, center): #Calculando la proyección de la cámara.
     coeff = -1 /(eye.len() - center.len()) #Calculando el coeficiente de alejamiento.
    
     #Definiendo la matriz de vista (sin numpy)
-    c1.Projection = [
+    c1.Projection = Matriz([
         [1, 0, 0, 0],
         [0, 1, 0, 0],
         [0, 0, 1, 0],
         [0, 0, coeff, 1]
-    ]
+    ])
 
 def loadViewPortMatrix(x, y, w, h): #Calculando la proyección de la cámara.
     
-    c1.lista = [
+    c1.lista = Matriz([
         [w, 0, 0, x + w],
         [0, h, 0, y + h],
         [0, 0, 128, 128],
         [0, 0, 0, 1]
-    ]
+    ])
 
 
 
@@ -432,8 +434,7 @@ def lookAt(eye, center, up): #Recibe donde está la cámara, el centro y que es 
     y = cross(z, x).normalice()  # Y de la cámara.
 
     loadViewMatrix(x, y, z, center) #Cargando la matriz de vista.
-    loadProjectionMatrix(eye, center) #Cargando la matriz de proyección.
-    
+    loadProjectionMatrix(eye, center) #Cargando la matriz de proyección.    
 
 #Este método recibe ahora dos paths. Uno es para el obj y el otro es para el bmp.
 def modelo(path1, path2, col1): #Método para cargar un modelo 3D.
@@ -539,7 +540,7 @@ def modelo(path1, path2, col1): #Método para cargar un modelo 3D.
                 fn1 = face[0][2] - 1 #Se le resta 1 porque el array de vértices empieza en 0.
                 fn2 = face[1][2] - 1 #Agarrando el índice 0.
                 fn3 = face[2][2] - 1 #Agarrando el índice 1.
-                fn4 = face[3][0] - 1 #Agarrando el índice 2.
+                fn4 = face[3][2] - 1 #Agarrando el índice 2.
 
                 #print(r.vertices[f1], scale, translate)
 
@@ -660,25 +661,29 @@ def transform_vertex(vertex):
     #print(vertex)
     #print(scale)
 
-    aumented_vertex = [
+    aumented_vertex = Matriz([
         [vertex[0]], 
         [vertex[1]], 
         [vertex[2]], 
                 [1]
-        ] #Se aumenta el vértice a 4 dimensiones.
+        ]) #Se aumenta el vértice a 4 dimensiones.
 
 
     #Debuggeo.
     #print("Model matrix: ", model_matrix)
     #print("Aumented vertex: ", aumented_vertex)
 
-    transformed_vertex = c3.multiplicar(c1.lista, c3.multiplicar(c1.Projection, c3.multiplicar(c3.multiplicar(c1.view, c1.model_s), aumented_vertex))) #Se multiplica el vértice aumentado por la matriz de transformación. Luego se tiene que cambiar a @, porque * es para multiplicar con numpy.
+    #transformed_vertex = c3.multiplicar(c1.lista, c3.multiplicar(c1.Projection, c3.multiplicar(c3.multiplicar(c1.view, c1.model_s), aumented_vertex))) #Se multiplica el vértice aumentado por la matriz de transformación. Luego se tiene que cambiar a @, porque * es para multiplicar con numpy.
     
-    # print("Tansformed vertex: ", transformed_vertex) #Debuggeo.
+    transformed_vertex = c1.lista * c1.Projection * c1.view * c1.model_s * aumented_vertex #Se multiplica el vértice aumentado por la matriz de transformación. Luego se tiene que cambiar a @, porque * es para multiplicar con numpy.
 
-    # print("Componentes del vertex: ", transformed_vertex[0][0], transformed_vertex[1][0], transformed_vertex[2][0]) #Debuggeo.
+    #Imprimiendo el vértice transformado.
+    #print("Transformed vertex: ", transformed_vertex)
 
-    #print("Tansformed vertex en vector 3D: ", V3(transformed_vertex[0][0]/transformed_vertex[2][0], transformed_vertex[1][0]/transformed_vertex[2][0], transformed_vertex[2][0]/transformed_vertex[2][0])) #Debuggeo.
+    #Imprimiendo cada componente del vértice transformado.
+    #print("Transformed vertex x: ", transformed_vertex[0])
+    
+    #print("Transformed vertex y: ", transformed_vertex[1][0])
 
     #Recibir la matriz del vector.
     return V3(
