@@ -794,13 +794,15 @@ def shader(render, **kwargs): #Función hace los shaders.
    iC = nC.normalice() @ L.normalice() #Se calcula la intensidad del punto C.
 
    i = iA * w + iB * u + iC * v #Se calcula la intensidad del punto P.
+   #print("A, B, C: ", type(A), type(B), type(C))
 
    if i < 0: #Si la intensidad es menor que 0, entonces se setea en 0.
         i = abs(i)
 
    r = 0.7 * i #Se calcula el valor de r.
    g = 0.5 * i #Se calcula el valor de g.
-   b = 0.1 * i #Se calcula el valor de b.
+   b = 0.8 * i #Se calcula el valor de b.
+
 
    return color(r, g, b) #Se setea el color del punto con textura.
 

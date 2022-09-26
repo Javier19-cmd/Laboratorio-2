@@ -15,7 +15,7 @@ def main():
     glClearColor(1, 1, 1) #Color del fondo.
     glClear() #Limpiando el framebuffer con el color creado en glClearColor.
     
-    glViewPort(300, 500, 300, 300) #Asignando el viewport.
+    glViewPort(500, 700, 300, 300) #Asignando el viewport.
 
     col1 = (0.6, 0.1, 0.9) #Otro color.
 
@@ -28,8 +28,8 @@ def main():
     # rotacion = (0, 0, pi/2), glViewPort(700, 800, 300, 300) y lookAt(V3(0, 0, 10), V3(0, 1, 0), V3(0, 1, 0)). 
     lookAt(V3(0, 0, 10), V3(0, 1, 0), V3(0, 1, 0))
 
-    scale = (3, 3, 3) #Escala para las cajas.
-    translate = (1, 0.2, 0) #Traslación para las cajas.
+    scale = (2, 2, 2) #Escala para las cajas.
+    translate = (0, 0, 0) #Traslación para las cajas.
     
     rotacion = (0, 0, 0) #Rotación para las cajas.
 
