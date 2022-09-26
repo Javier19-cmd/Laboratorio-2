@@ -783,7 +783,7 @@ def baricentrico(A, B, C, P):
 
 def shader(render, **kwargs): #Función hace los shaders.
    w, u, v = kwargs['bar'] #Se obtienen los valores de u, v y w.
-   tA, tB, tC = kwargs['texture_coords'] #Se obtienen los vértices de textura.
+   #tA, tB, tC = kwargs['texture_coords'] #Se obtienen los vértices de textura.
    nA, nB, nC = kwargs['normales'] #Se obtienen los vértices de normales.
    A, B, C = kwargs['vertices'] #Se obtienen los vértices.
    L = kwargs['light'] #Se obtiene el vector de la luz.
@@ -796,57 +796,13 @@ def shader(render, **kwargs): #Función hace los shaders.
    i = iA * w + iB * u + iC * v #Se calcula la intensidad del punto P.
 
    if i < 0: #Si la intensidad es menor que 0, entonces se setea en 0.
-        i = 0
+        i = abs(i)
 
-   #print("Textura: ", tA, tB, tC) #Se imprimen los vértices de textura.
-   #print("Intensidad: ", i) #Se imprime la intensidad.
+   r = 0.7 * i #Se calcula el valor de r.
+   g = 0.5 * i #Se calcula el valor de g.
+   b = 0.1 * i #Se calcula el valor de b.
 
-
-
-   if render.tpath: #Si el path2 no está vacío, entonces se dibuja el triángulo con textura.
-        tx = tA.x * w + tB.x * v + tC.x * u #Se calcula la x de la textura.
-        ty = tA.y * w + tB.y * v + tC.y * u #Se calcula la y de la textura.
-        
-
-        b, g, r = render.colorP = c2.get_color_with_intensity(tx, ty, i) #Se obtiene el color de la textura con la intensidad.
-
-
-        # render.colorP = c2.get_color_with_intensity(tx, ty, i) #Se obtiene el color de la textura con la intensidad.
-
-        #print("Tipo del color: ", type(render.colorP))
-
-        #print("Colores generados: ", b, g, r)
-
-        # Si b, g, r son mayores que 255, entonces se setean en 255.
-        if b > 255:
-            b = 255
-        if g > 255:
-            g = 255
-        if r > 255:
-            r = 255
-        
-        #Si b, g, r son menores que 0, entonces se setean en 0.
-        if b < 0:
-            b = 0
-        if g < 0:
-            g = 0
-        if r < 0:
-            r = 0
-
-        #Si el color no es de bytes, entonces se convierte a bytes.
-        # if type(render.colorP) != bytes:
-        #     render.colorP = color(0, 0, 0)
-
-        #print("Color en el shader: ", render.colorP)
-
-        #return color(b/255, g/255, r/255) #Se setea el color del punto con textura.
-
-        return render.colorP #Se setea el color del punto con textura.
-
-        ##
-
-    #print("Y: ", y)
-    #return color(1, 0, 0)
+   return color(r, g, b) #Se setea el color del punto con textura.
 
 def triangle(col, vertices, nv=()): #Función que dibuja un triángulo.
 
