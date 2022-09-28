@@ -11,24 +11,17 @@ from gl import * #Importando el archivo gl.py, para crear la imagen.
 from textures import * #Importando los métodos del archivo textures.py.
 
 def main():
-    glCreateWindow(2024, 2024) #Creando la ventana.
+    glCreateWindow(5120, 5120) #Creando la ventana.
     glClearColor(1, 1, 1) #Color del fondo.
     glClear() #Limpiando el framebuffer con el color creado en glClearColor.
     
-    glViewPort(500, 700, 300, 300) #Asignando el viewport.
+    glViewPort(2100, 2100, 300, 300) #Asignando el viewport.
 
     col1 = (0.6, 0.1, 0.9) #Otro color.
 
-    #Probando el lookat.
-    # El medium shot se hizo con estas medidas: V3(25, 0, 10), V3(0, 1, 0), V3(0, 1, 0).
-    # El low angle se hizo con estas medidas: V3(10, -4.5, 0), V3(1, 0, 0), V3(0, 1, 0).
-    # El high agnle se hizo con estas medidas: V3(10, 12, 0), V3(1, 0, 0), V3(0, 1, 0) y las medidas 
-    # del viewport fueron glViewPort(900, 500, 300, 300).
-    # El dutch angle se hizo con estas medidas: scale = (0.75, 0.75, 1), translate = (1, 0.2, 0)
-    # rotacion = (0, 0, pi/2), glViewPort(700, 800, 300, 300) y lookAt(V3(0, 0, 10), V3(0, 1, 0), V3(0, 1, 0)). 
     lookAt(V3(0, 0, 10), V3(0, 1, 0), V3(0, 1, 0))
 
-    scale = (2, 2, 2) #Escala para las cajas.
+    scale = (3, 3, 3) #Escala para las cajas.
     translate = (0, 0, 0) #Traslación para las cajas.
     
     rotacion = (0, 0, 0) #Rotación para las cajas.

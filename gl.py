@@ -26,6 +26,7 @@ SR4:
 """
 
 from pyexpat import model
+import random
 from Render import * #Importando la clase Render.
 from utilidades import *
 from vector import *
@@ -799,12 +800,21 @@ def shader(render, **kwargs): #Función hace los shaders.
    if i < 0: #Si la intensidad es menor que 0, entonces se setea en 0.
         i = abs(i)
 
-   r = 0.7 * i #Se calcula el valor de r.
-   g = 0.5 * i #Se calcula el valor de g.
-   b = 0.8 * i #Se calcula el valor de b.
+#    #Haciendo un gradiente de colores.
+#    r = 0.6 * i
+#    g = 0.1 * i
+#    b = 0.5 * i
 
-
-   return color(r, g, b) #Se setea el color del punto con textura.
+   for i in range(50):
+       # print(random.random())
+        #r = random.random() * 0.00000000000001
+        #Aún no se ha probado.
+        r = 0.0009
+        g = 0.0009
+        #g = random.random() * 0.00000000000001
+        b = random.random() * 1
+        return color(r, g, b)
+  # return color(r, g, b) #Se setea el color del punto con textura.
 
 def triangle(col, vertices, nv=()): #Función que dibuja un triángulo.
 
