@@ -12,7 +12,7 @@ from textures import * #Importando los métodos del archivo textures.py.
 
 def main():
     glCreateWindow(5120, 5120) #Creando la ventana.
-    glClearColor(1, 1, 1) #Color del fondo.
+    glClearColor(0, 0, 0) #Color del fondo.
     glClear() #Limpiando el framebuffer con el color creado en glClearColor.
     
     glViewPort(2100, 2100, 300, 300) #Asignando el viewport.

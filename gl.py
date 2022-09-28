@@ -805,12 +805,12 @@ def shader(render, **kwargs): #Función hace los shaders.
 #    g = 0.1 * i
 #    b = 0.5 * i
 
-   for i in range(50):
+   for a in range(50):
        # print(random.random())
         #r = random.random() * 0.00000000000001
         #Aún no se ha probado.
-        r = 0.0009
-        g = 0.0009
+        r = random.random() * 0.4
+        g = random.random() * 0.4
         #g = random.random() * 0.00000000000001
         b = random.random() * 1
         return color(r, g, b)
