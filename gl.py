@@ -810,10 +810,15 @@ def shader(render, **kwargs): #Función hace los shaders.
         #r = random.random() * 0.00000000000001
         #Aún no se ha probado.
         r = random.random() * 0.04
-        g = random.random() * 0.6
+        g = random.random() * 0.06
         #g = random.random() * 0.00000000000001
-        b = random.random() * 1
+        b = random.random() * 1        
+    
         return color(r, g, b)
+
+
+        #glVertex(A.x, A.y, color(0, 0, 0))
+
   # return color(r, g, b) #Se setea el color del punto con textura.
 
 def triangle(col, vertices, nv=()): #Función que dibuja un triángulo.
