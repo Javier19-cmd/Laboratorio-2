@@ -15,13 +15,13 @@ def main():
     glClearColor(0, 0, 0) #Color del fondo.
     glClear() #Limpiando el framebuffer con el color creado en glClearColor.
     
-    glViewPort(2100, 2100, 300, 300) #Asignando el viewport.
+    glViewPort(500, 1500, 3000, 3000) #Asignando el viewport.
 
-    col1 = (0.6, 0.1, 0.9) #Otro color.
+    #col1 = (0.6, 0.1, 0.9) #Otro color.
 
     lookAt(V3(0, 0, 10), V3(0, 1, 0), V3(0, 1, 0))
 
-    scale = (3, 3, 3) #Escala para las cajas.
+    scale = (1, 1, 1) #Escala para las cajas.
     translate = (0, 0, 0) #Traslación para las cajas.
     
     rotacion = (0, 0, 0) #Rotación para las cajas.
@@ -32,7 +32,10 @@ def main():
     loadModelMatrix(translate, scale, rotacion) #Se carga la matriz de transformación del modelo. Acá se recibe la traslación, la escala y la rotación.
 
     #Esta función ahora recibe primero el path del obj, luego el path del bmp, el color.
-    modelo("./sphere.obj", "", col1) 
+    modelo("./sphere.obj", "")
+
+    #Dibujando el modelo.
+    dibujar("triangle") 
 
     glFinish() #Escribiendo el framebuffer en la imagen y guardándola en un archivo.
 

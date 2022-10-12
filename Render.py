@@ -43,6 +43,12 @@ class Render(object):
     #Declarando la matriz de proyección.
     Projection = None
 
+    #Lista para guardar los vértices a dibujar.
+    vertex_buffer_obj = []
+
+    #Lista para guardar los vértices activos.
+    active_vertex_buffer = []
+
 
     #Método que escribe el archivo bmp.
     def write(self): #Escribir un archivo, pero con el zbuffer.

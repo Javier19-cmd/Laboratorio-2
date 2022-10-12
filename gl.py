@@ -437,8 +437,107 @@ def lookAt(eye, center, up): #Recibe donde está la cámara, el centro y que es 
     loadViewMatrix(x, y, z, center) #Cargando la matriz de vista.
     loadProjectionMatrix(eye, center) #Cargando la matriz de proyección.    
 
+
+#Función que transforma los vértices de la estructura de la imagen.
+def transform_vertex(vertex):
+    
+    #print(vertex)
+    #print(scale)
+
+    aumented_vertex = Matriz([
+        [vertex[0]], 
+        [vertex[1]], 
+        [vertex[2]], 
+                [1]
+        ]) #Se aumenta el vértice a 4 dimensiones.
+
+
+    #Debuggeo.
+    #print("Model matrix: ", model_matrix)
+    #print("Aumented vertex: ", aumented_vertex)
+
+    #transformed_vertex = c3.multiplicar(c1.lista, c3.multiplicar(c1.Projection, c3.multiplicar(c3.multiplicar(c1.view, c1.model_s), aumented_vertex))) #Se multiplica el vértice aumentado por la matriz de transformación. Luego se tiene que cambiar a @, porque * es para multiplicar con numpy.
+    
+    transformed_vertex = c1.lista * c1.Projection * c1.view * c1.model_s * aumented_vertex #Se multiplica el vértice aumentado por la matriz de transformación. Luego se tiene que cambiar a @, porque * es para multiplicar con numpy.
+
+    #Imprimiendo el vértice transformado.
+    #print("Transformed vertex: ", transformed_vertex)
+
+    #Imprimiendo cada componente del vértice transformado.
+    #print("Transformed vertex x: ", transformed_vertex[0])
+    
+    #print("Transformed vertex y: ", transformed_vertex[1][0])
+
+    #Recibir la matriz del vector.
+    return V3(
+        transformed_vertex[0][0]/transformed_vertex[3][0], 
+        transformed_vertex[1][0]/transformed_vertex[3][0],
+        transformed_vertex[2][0]/transformed_vertex[3][0]
+        ) #Se regresa el vértice transformado en términos de vector 3D.
+
+
+
+def cross(V1, V2): #Producto cruz entre dos vectores, pero con return de V3.
+
+    return V3(
+        V1.y * V2.z - V1.z * V2.y,
+        V1.z * V2.x - V1.x * V2.z,
+        V1.x * V2.y - V1.y * V2.x
+    )
+
+def bounding_box(A, B, C): #Función que calcula el bounding box de un triángulo.
+
+    coords = [(A.x, A.y), (B.x, B.y), (C.x, C.y)] #Se guardan las coordenadas de los puntos.
+
+    #Se calculan las coordenadas mínimas y máximas.
+    xmin = 99999
+    xmax = -99999
+    ymin = 99999
+    ymax = -99999
+
+
+    for (x, y) in coords: #Se recorren las coordenadas.
+
+        if x < xmin: #Si la coordenada x es menor que la mínima, se setea la mínima.
+            xmin = x
+        if x > xmax: #Si la coordenada x es mayor que la máxima, se setea la máxima.
+            xmax = x
+        if y < ymin: #Si la coordenada y es menor que la mínima, se setea la mínima.
+            ymin = y
+        if y > ymax: #Si la coordenada y es mayor que la máxima, se setea la máxima.
+            ymax = y
+
+    #print("Coordenadas: ", x, y)
+
+    return V3(xmin, ymin), V3(xmax, ymax) #Se retornan las coordenadas mínimas y máximas.
+
+
+    #return V3(xmin, xmax), V3(ymin, ymax) #Retornando los valores mínimos y máximos de x y y.
+
+def baricentrico(A, B, C, P):
+
+    cx, cy, cz = V3(B.x - A.x, C.x - A.x, A.x - P.x) * V3(B.y - A.y, C.y - A.y, A.y - P.y)
+                    
+
+    #print("¨Producto cruz: ", V3(B.x - A.x, C.x - A.x, A.x - P.x) * V3(B.y - A.y, C.y - A.y, A.y - P.y))
+
+    #print("Valor de cz: ", cz)
+
+    if cz == 0: #Si el valor de cz es 0, entonces el punto no está en el plano.
+        u, v = -1, -1
+        w = -1
+
+        return (u, v, w)
+    else: #Si el valor de cz es diferente de 0, entonces el punto está en el plano.
+
+        u = cx/cz
+        v = cy/cz
+        w = 1 - (u + v)
+
+        return (u, v, w)
+
 #Este método recibe ahora dos paths. Uno es para el obj y el otro es para el bmp.
-def modelo(path1, path2, col1): #Método para cargar un modelo 3D.
+def modelo(path1, path2): #Método para cargar un modelo 3D.
 
     
     r = Object(path1) #Llamando al método Object del archivo Obj.py.
@@ -576,14 +675,32 @@ def modelo(path1, path2, col1): #Método para cargar un modelo 3D.
 
                 #print("Cara: ", f1, f2, f3, f4)
 
-                #Dibujando los triangulos.
-                triangle(col1, (v1, v2, v4), (vn1, vn2, vn4))
-                triangle(col1, (v2, v3, v4), (vn1, vn3, vn4))
+                # #Dibujando los triangulos.
+                # triangle(col1, (v1, v2, v4), (vn1, vn2, vn4))
+                # triangle(col1, (v2, v3, v4), (vn1, vn3, vn4))
+
+            #Primer triángulo.
+            c1.vertex_buffer_obj.append(v1)
+            c1.vertex_buffer_obj.append(v2)
+            c1.vertex_buffer_obj.append(v3)
+
+            c1.vertex_buffer_obj.append(vn1)
+            c1.vertex_buffer_obj.append(vn2)
+            c1.vertex_buffer_obj.append(vn3)
+
+            #Segundo triángulo.
+            c1.vertex_buffer_obj.append(v1)
+            c1.vertex_buffer_obj.append(v3)
+            c1.vertex_buffer_obj.append(v4)
+
+            c1.vertex_buffer_obj.append(vn1)
+            c1.vertex_buffer_obj.append(vn3)
+            c1.vertex_buffer_obj.append(vn4)
             
-            else: 
-                #Dibujando los triangulos.
-                triangle(col1, (v1, v2, v4))
-                triangle(col1, (v2, v3, v4))
+            # else: 
+            #     #Dibujando los triangulos.
+            #     triangle(col1, (v1, v2, v4))
+            #     triangle(col1, (v2, v3, v4))
                 
 
 
@@ -680,107 +797,33 @@ def modelo(path1, path2, col1): #Método para cargar un modelo 3D.
             vn3 = V3(*r.normal[fn3])
 
             #Haciendo el render de los triángulos.
-            triangle(col1, (v1, v2, v3), (vn1, vn2, vn3)) #Llamando al método triangle para dibujar un triángulo.
+            #triangle(col1, (v1, v2, v3), (vn1, vn2, vn3)) #Llamando al método triangle para dibujar un triángulo.
+
+            #Agregando los vértices a la lista de vértices.
+            c1.vertex_buffer_obj.append(v1)
+            c1.vertex_buffer_obj.append(v2)
+            c1.vertex_buffer_obj.append(v3)
+
+            #Agregando los vértices de normales a la lista de vértices.
+            c1.vertex_buffer_obj.append(vn1)
+            c1.vertex_buffer_obj.append(vn2)
+            c1.vertex_buffer_obj.append(vn3)
 
             #triangle(col1, (v1, v2, v3), (vn1, vn2, vn3)) #Llamando al método triangle para dibujar un triángulo.
 
-#Función que transforma los vértices de la estructura de la imagen.
-def transform_vertex(vertex):
+def dibujar(poligono): #Función para dibujar los polígonos.
+    c1.active_vertex_array = iter(c1.vertex_buffer_obj) #Iterando el vertex buffer object.
     
-    #print(vertex)
-    #print(scale)
+    #Dibujando los polígonos.
+    if poligono == 'triangle': #Dibujando triángulos.
+        try:
+            while True: #Dibujando los triángulos.
+                triangle() #Dibujando el triángulo.
+                #triangle_wire() #Dibujando los triángulos.
+                #drawModel() #Dibujando los triángulos.
+        except StopIteration:
+            print('Dibujando triángulos...')
 
-    aumented_vertex = Matriz([
-        [vertex[0]], 
-        [vertex[1]], 
-        [vertex[2]], 
-                [1]
-        ]) #Se aumenta el vértice a 4 dimensiones.
-
-
-    #Debuggeo.
-    #print("Model matrix: ", model_matrix)
-    #print("Aumented vertex: ", aumented_vertex)
-
-    #transformed_vertex = c3.multiplicar(c1.lista, c3.multiplicar(c1.Projection, c3.multiplicar(c3.multiplicar(c1.view, c1.model_s), aumented_vertex))) #Se multiplica el vértice aumentado por la matriz de transformación. Luego se tiene que cambiar a @, porque * es para multiplicar con numpy.
-    
-    transformed_vertex = c1.lista * c1.Projection * c1.view * c1.model_s * aumented_vertex #Se multiplica el vértice aumentado por la matriz de transformación. Luego se tiene que cambiar a @, porque * es para multiplicar con numpy.
-
-    #Imprimiendo el vértice transformado.
-    #print("Transformed vertex: ", transformed_vertex)
-
-    #Imprimiendo cada componente del vértice transformado.
-    #print("Transformed vertex x: ", transformed_vertex[0])
-    
-    #print("Transformed vertex y: ", transformed_vertex[1][0])
-
-    #Recibir la matriz del vector.
-    return V3(
-        transformed_vertex[0][0]/transformed_vertex[3][0], 
-        transformed_vertex[1][0]/transformed_vertex[3][0],
-        transformed_vertex[2][0]/transformed_vertex[3][0]
-        ) #Se regresa el vértice transformado en términos de vector 3D.
-
-
-
-def cross(V1, V2): #Producto cruz entre dos vectores, pero con return de V3.
-
-    return V3(
-        V1.y * V2.z - V1.z * V2.y,
-        V1.z * V2.x - V1.x * V2.z,
-        V1.x * V2.y - V1.y * V2.x
-    )
-
-def bounding_box(A, B, C): #Función que calcula el bounding box de un triángulo.
-
-    coords = [(A.x, A.y), (B.x, B.y), (C.x, C.y)] #Se guardan las coordenadas de los puntos.
-
-    #Se calculan las coordenadas mínimas y máximas.
-    xmin = 99999
-    xmax = -99999
-    ymin = 99999
-    ymax = -99999
-
-
-    for (x, y) in coords: #Se recorren las coordenadas.
-
-        if x < xmin: #Si la coordenada x es menor que la mínima, se setea la mínima.
-            xmin = x
-        if x > xmax: #Si la coordenada x es mayor que la máxima, se setea la máxima.
-            xmax = x
-        if y < ymin: #Si la coordenada y es menor que la mínima, se setea la mínima.
-            ymin = y
-        if y > ymax: #Si la coordenada y es mayor que la máxima, se setea la máxima.
-            ymax = y
-
-    #print("Coordenadas: ", x, y)
-
-    return V3(xmin, ymin), V3(xmax, ymax) #Se retornan las coordenadas mínimas y máximas.
-
-
-    #return V3(xmin, xmax), V3(ymin, ymax) #Retornando los valores mínimos y máximos de x y y.
-
-def baricentrico(A, B, C, P):
-
-    cx, cy, cz = V3(B.x - A.x, C.x - A.x, A.x - P.x) * V3(B.y - A.y, C.y - A.y, A.y - P.y)
-                    
-
-    #print("¨Producto cruz: ", V3(B.x - A.x, C.x - A.x, A.x - P.x) * V3(B.y - A.y, C.y - A.y, A.y - P.y))
-
-    #print("Valor de cz: ", cz)
-
-    if cz == 0: #Si el valor de cz es 0, entonces el punto no está en el plano.
-        u, v = -1, -1
-        w = -1
-
-        return (u, v, w)
-    else: #Si el valor de cz es diferente de 0, entonces el punto está en el plano.
-
-        u = cx/cz
-        v = cy/cz
-        w = 1 - (u + v)
-
-        return (u, v, w)
 
 def shader(render, **kwargs): #Función hace los shaders.
    w, u, v = kwargs['bar'] #Se obtienen los valores de u, v y w.
@@ -821,15 +864,23 @@ def shader(render, **kwargs): #Función hace los shaders.
 
   # return color(r, g, b) #Se setea el color del punto con textura.
 
-def triangle(col, vertices, nv=()): #Función que dibuja un triángulo.
+def triangle(): #Función que dibuja un triángulo.
 
-    A, B, C = vertices #Se obtienen los vértices.
+    #A, B, C = vertices #Se obtienen los vértices.
+
+    A = next(c1.active_vertex_array)
+    B = next(c1.active_vertex_array)
+    C = next(c1.active_vertex_array)
 
     # if c1.tpath: #Si el path2 no está vacío, entonces se dibuja el triángulo con textura.
     #     tA, tB, tC = tv #Se obtienen los vértices de textura.
         #print(tA, tB, tC)
 
-    nA, nB, nC = nv #Se obtienen los vértices de normales.
+    #nA, nB, nC = nv #Se obtienen los vértices de normales.
+
+    nA = next(c1.active_vertex_array)
+    nB = next(c1.active_vertex_array)
+    nC = next(c1.active_vertex_array)
 
     #print(col[0], col[1], col[2])
 
