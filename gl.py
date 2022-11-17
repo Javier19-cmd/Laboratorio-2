@@ -123,7 +123,6 @@ def glClearColor(r, g, b): #Función con la que se pueda cambiar el color con el
         colorPantalla = color(r, g, b) #Creando el color de la pantalla.
         
         c1.colorFondo = colorPantalla #Se manda a hacer el color de la pantalla.
-
         #print("Color de fondo: ", c1.colorFondo) #Imprimiendo el color de la pantalla.
 
         #color(rP, gP, bP) #Color inicial de la pantalla.
@@ -131,6 +130,15 @@ def glClearColor(r, g, b): #Función con la que se pueda cambiar el color con el
         #Rend2.recibirColor(color(rP, gP, bP))
 
         #print("Color en glClearColor: ", color(rP, gP, bP)) #Debuggeo.
+
+def randomPoints():
+    #Generando los puntos aleatorios.
+    x = random.randint(0, c1.width)
+    y = random.randint(0, c1.height)
+
+    c1.colorP = color(1, 1, 1)
+
+    glVertex(x, y)
 
 def glVertex(x, y): #Función que pueda cambiar el color de un punto de la pantalla. Las coordenadas x, y son relativas al viewport que definieron con glViewPort. glVertex(0, 0) cambia el color del punto en el centro del viewport, glVertex(1, 1) en la esquina superior derecha. glVertex(-1, -1) la esquina inferior izquierda
     #Debuggeo de los puntos.

@@ -39,6 +39,8 @@ def main():
     #Dibujando el modelo.
     dibujar("triangle") 
 
+    randomPoints() #Generando puntos aleatorios.
+
     glFinish() #Escribiendo el framebuffer en la imagen y guardándola en un archivo.
 
 main()
