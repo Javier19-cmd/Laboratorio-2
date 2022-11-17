@@ -843,22 +843,42 @@ def shader(render, **kwargs): #Función hace los shaders.
    if i < 0: #Si la intensidad es menor que 0, entonces se setea en 0.
         i = abs(i)
 
+   #De cero a la mitad de la altura de la figura, se dibuja de color blanco.
+   if i >= 0 and i <= 0.55:
+        #i = 1
+        r = 0.1
+        g = 0.25
+        b = 0.45
+        return color(r, g, b)
+    #De la mitad de la altura de la figura a la altura de la figura, se dibuja de color negro.
+   elif i > 0.55 and i < 0.75:
+        #i = 1
+        r = 0.4
+        g = 0.6
+        b = 0.8
+        return color(r, g, b)
+   elif i > 0.75 and i < 1:
+        #i = 1
+        r = 0.5
+        g = 0.7
+        b = 0.9
+        return color(r, g, b)
+
 #    #Haciendo un gradiente de colores.
 #    r = 0.6 * i
 #    g = 0.1 * i
 #    b = 0.5 * i
 
-   for a in range(100):
-       # print(random.random())
-        #r = random.random() * 0.00000000000001
-        #Aún no se ha probado.
-        r = random.random() * 0.04
-        g = random.random() * 0.06
-        #g = random.random() * 0.00000000000001
-        b = random.random() * 1        
+#    for a in range(100):
+#        # print(random.random())
+#         #r = random.random() * 0.00000000000001
+#         #Aún no se ha probado.
+#         r = random.random() * 0.04
+#         g = random.random() * 0.06
+#         #g = random.random() * 0.00000000000001
+#         b = random.random() * 1        
     
-        return color(r, g, b)
-
+#         return color(r, g, b)
 
         #glVertex(A.x, A.y, color(0, 0, 0))
 
