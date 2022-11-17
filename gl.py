@@ -839,6 +839,8 @@ def shader(render, **kwargs): #Función hace los shaders.
    nA, nB, nC = kwargs['normales'] #Se obtienen los vértices de normales.
    A, B, C = kwargs['vertices'] #Se obtienen los vértices.
    L = kwargs['light'] #Se obtiene el vector de la luz.
+   y = kwargs['y']
+   x = kwargs['x']
 
 
    iA = nA.normalice() @ L.normalice() #Se calcula la intensidad del punto A.
@@ -964,7 +966,9 @@ def triangle(): #Función que dibuja un triángulo.
                     #texture_coords=(tA, tB, tC),
                     normales=(nA, nB, nC),
                     bar=(w, v, u),
-                    light = L
+                    light = L,
+                    y = y,
+                    x = x
                     ) #Creando los shaders con la función shader.
 
                 glVertex(x, y) #Se dibuja el punto.
