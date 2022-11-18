@@ -839,8 +839,8 @@ def shader(render, **kwargs): #Función hace los shaders.
    nA, nB, nC = kwargs['normales'] #Se obtienen los vértices de normales.
    A, B, C = kwargs['vertices'] #Se obtienen los vértices.
    L = kwargs['light'] #Se obtiene el vector de la luz.
-   y = kwargs['y']
    x = kwargs['x']
+   y = kwargs['y']
 
 
    iA = nA.normalice() @ L.normalice() #Se calcula la intensidad del punto A.
@@ -853,26 +853,48 @@ def shader(render, **kwargs): #Función hace los shaders.
    if i < 0: #Si la intensidad es menor que 0, entonces se setea en 0.
         i = abs(i)
 
-   #De cero a la mitad de la altura de la figura, se dibuja de color blanco.
-   if i >= 0 and i <= 0.55:
-        #i = 1
-        r = 0.1
-        g = 0.25
-        b = 0.45
-        return color(r, g, b)
-    #De la mitad de la altura de la figura a la altura de la figura, se dibuja de color negro.
-   elif i > 0.55 and i < 0.75:
-        #i = 1
-        r = 0.4
-        g = 0.6
-        b = 0.8
-        return color(r, g, b)
-   elif i > 0.75 and i < 1:
-        #i = 1
-        r = 0.5
-        g = 0.7
-        b = 0.9
-        return color(r, g, b)
+#    #De cero a la mitad de la altura de la figura, se dibuja de color blanco.
+#    if i >= 0 and i <= 0.55:
+#         #i = 1
+#         r = 0.1
+#         g = 0.25
+#         b = 0.45
+#         return color(r, g, b)
+#     #De la mitad de la altura de la figura a la altura de la figura, se dibuja de color negro.
+#    elif i > 0.55 and i < 0.75:
+#         #i = 1
+#         r = 0.4
+#         g = 0.6
+#         b = 0.8
+#         return color(r, g, b)
+#    elif i > 0.75 and i < 1:
+#         #i = 1
+#         r = 0.5
+#         g = 0.7
+#         b = 0.9
+#         return color(r, g, b)
+
+   if (y > 0 and x > 0) and (y < 130 and x < 400): #Primer color.
+        return color(1, 0.88, 0.4)
+   elif (y >= 130 and x >= 0) and (y <= 150 and x <= 350): #Segundo color.
+        return color(0.8, 0.8, 0.5)
+   elif (y >= 150 and x >= 0) and (y <= 170 and x <= 350): #Tercer color.
+        return color(0.9, 0.9, 0.8)
+   elif (y >= 170 and x >= 0) and (y <= 190 and x <= 350): #Cuarto color.
+        #Retornando el color anaranjado.
+        return color(0.90, 0.72, 0)
+   elif (y >= 190 and x >= 0) and (y <= 210 and x <= 350): #Quinto color.
+        return color(0.9, 0.9, 0.8)
+   elif (y >= 210 and x >= 0) and (y <= 230 and x <= 350): #Sexto color.
+        return color(0.90, 0.72, 0)
+   elif (y >= 230 and x >= 0) and (y <= 235 and x <= 350): #Séptimo color.
+        return color(0.8, 0.8, 0.5)
+   elif (y >= 235 and x >= 0) and (y <= 240 and x <= 350): #Octavo color.
+        return color(0.90, 0.72, 0)
+   elif (y >= 240 and x >= 0) and (y <= 250 and x <= 350): #Noveno color.
+        return color(0.8, 0.8, 0.5)
+   else:
+        return color(1, 0.88, 0.4)
 
 #    #Haciendo un gradiente de colores.
 #    r = 0.6 * i
@@ -967,8 +989,8 @@ def triangle(): #Función que dibuja un triángulo.
                     normales=(nA, nB, nC),
                     bar=(w, v, u),
                     light = L,
-                    y = y,
-                    x = x
+                    x = x,
+                    y = y
                     ) #Creando los shaders con la función shader.
 
                 glVertex(x, y) #Se dibuja el punto.

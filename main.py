@@ -23,7 +23,7 @@ def main():
 
     lookAt(V3(0, 0, 10), V3(0, 1, 0), V3(0, 1, 0))
 
-    scale = (1, 1, 1) #Escala para las cajas.
+    scale = (0.5, 0.5, 0.5) #Escala para las cajas.
     translate = (0, 0, 0) #Traslación para las cajas.
     
     rotacion = (0, 0, 0) #Rotación para las cajas.
