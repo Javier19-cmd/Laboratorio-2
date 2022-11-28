@@ -875,26 +875,26 @@ def shader(render, **kwargs): #Función hace los shaders.
 #         return color(r, g, b)
 
    if (y > 0 and x > 0) and (y < 130 and x < 400): #Primer color.
-        return color(1, 0.88, 0.4)
+        return color(0.8, 0.8, 0.8) #
    elif (y >= 130 and x >= 0) and (y <= 150 and x <= 350): #Segundo color.
-        return color(0.8, 0.8, 0.5)
+        return color(0.95, 0.8, 0.5) #
    elif (y >= 150 and x >= 0) and (y <= 170 and x <= 350): #Tercer color.
-        return color(0.9, 0.9, 0.8)
+        return color(1, 1, 0.9) #
    elif (y >= 170 and x >= 0) and (y <= 190 and x <= 350): #Cuarto color.
         #Retornando el color anaranjado.
-        return color(0.90, 0.72, 0)
+        return color(1, 0.68, 0.2) #
    elif (y >= 190 and x >= 0) and (y <= 210 and x <= 350): #Quinto color.
-        return color(0.9, 0.9, 0.8)
+        return color(1, 1, 0.9) #
    elif (y >= 210 and x >= 0) and (y <= 230 and x <= 350): #Sexto color.
-        return color(0.90, 0.72, 0)
+        return color(1, 0.68, 0.2) #
    elif (y >= 230 and x >= 0) and (y <= 235 and x <= 350): #Séptimo color.
-        return color(0.8, 0.8, 0.5)
+        return color(1, 1, 0.9) #
    elif (y >= 235 and x >= 0) and (y <= 240 and x <= 350): #Octavo color.
-        return color(0.90, 0.72, 0)
+        return color(1, 0.68, 0.2) #
    elif (y >= 240 and x >= 0) and (y <= 250 and x <= 350): #Noveno color.
-        return color(0.8, 0.8, 0.5)
+        return color(1, 1, 0.8) #
    else:
-        return color(1, 0.88, 0.4)
+        return color(0.95, 0.8, 0.5) #
 
 #    #Haciendo un gradiente de colores.
 #    r = 0.6 * i
